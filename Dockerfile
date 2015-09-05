@@ -1,12 +1,11 @@
-FROM gliderlabs/alpine:latest
+FROM coolsoft/jdk8:latest
 
 MAINTAINER Wojciech Wójcik <wojtaswojcik@gmail.com>
 
 ENV YOUTRACK_VERSION=6.5.16433 \
-    JAVA_HOME=/usr/lib/jvm/java-1.7-openjdk \
     TIMEZONE=Europe/Warsaw
 
-RUN apk --update add openjdk7-jre-base openssl unzip tzdata\
+RUN apk --update add openssl unzip tzdata\
     && wget -O /tmp/youtrack.zip http://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.zip \
     && mkdir -p /opt/youtrack \
     && unzip /tmp/youtrack.zip -d /opt/youtrack  \
@@ -16,5 +15,4 @@ RUN apk --update add openjdk7-jre-base openssl unzip tzdata\
 
 EXPOSE 8080
 VOLUME ["/opt/youtrack/conf", "/opt/youtrack/data"]
-ENTRYPOINT ["/opt/youtrack/bin/youtrack.sh", "start"]
-CMD [""]
+CMD ["/opt/youtrack/bin/youtrack.sh", "run"]
